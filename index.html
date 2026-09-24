@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0a1025" />
+    <meta name="description" content="Drop, drift, and merge your way through Dlicom Drift Drop, a playful tide-powered puzzle game." />
+    <title>Drift Drop — Dlicom Playground</title>
+    <link rel="icon" type="image/png" href="assets/dlicom-mark.png" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="game.js" defer></script>
+  </head>
+  <body>
+    <div class="page-glow" aria-hidden="true"></div>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="#top" aria-label="Dlicom Playground home">
+          <img src="assets/dlicom-mark.png" alt="" />
+          <span class="brand-copy"><strong>DLICOM</strong><small>PLAYGROUND</small></span>
+        </a>
+        <div class="header-right">
+          <span class="live-pill"><i></i> NOW PLAYING</span>
+          <a class="header-link" href="#how-to-play">HOW TO PLAY <span aria-hidden="true">↗</span></a>
+        </div>
+      </header>
+
+      <main id="top">
+        <section class="intro" aria-labelledby="page-title">
+          <div>
+            <p class="eyebrow"><span class="eyebrow-line"></span> THE LITTLE GAME WITH A BIG CURRENT <span class="edition">/ VOL. 01</span></p>
+            <h1 id="page-title">Drift <em>Drop<span class="title-dot">.</span></em></h1>
+          </div>
+          <p class="intro-copy">Drop little Dlicoms. Match their colors. <br />Make waves when things get <em>too close.</em></p>
+        </section>
+
+        <section class="game-layout" aria-label="Drift Drop game">
+          <aside class="side-panel left-panel" id="how-to-play">
+            <div class="panel-kicker"><span class="tiny-star">✳</span> THE LOWDOWN <span>01 / 03</span></div>
+            <h2>Easy to learn.<br /><span>Hard to leave.</span></h2>
+            <p class="panel-intro">A familiar merge game, with one little twist: the whole bowl has a current.</p>
+            <div class="step-list">
+              <div class="step"><span class="step-number">01</span><div><strong>Drop it in</strong><p>Move your cursor and click to release a Dlicom.</p></div></div>
+              <div class="step"><span class="step-number">02</span><div><strong>Match &amp; squish</strong><p>Two of the same kind ooze together into one bigger friend.</p></div></div>
+              <div class="step"><span class="step-number">03</span><div><strong>Ride the tide</strong><p>Send a wave left or right to bring a match together.</p></div></div>
+            </div>
+            <div class="tip-card"><span class="tip-icon">✦</span><div><strong>A little tip</strong><p>Slimes squash, wobble and float. A wave only carries what sits below the waterline.</p></div></div>
+          </aside>
+
+          <div class="game-column">
+            <div class="board-topline"><span><i class="active-dot"></i> THE MERGE CHAMBER</span><span>GRAVITY, WITH A TWIST <span class="topline-star">✳</span></span></div>
+            <div class="game-frame">
+              <canvas id="game" width="560" height="610" aria-label="Game board. Move pointer to aim and click to drop. Use the wave buttons or left and right arrow keys to push pieces through the water."></canvas>
+              <div class="game-over" id="gameOver" hidden>
+                <div class="game-over-card">
+                  <span class="overlay-symbol">✳</span>
+                  <p class="overlay-kicker">THE TIDE WENT TOO HIGH</p>
+                  <h2>Nice splash!</h2>
+                  <p>You scored <strong id="finalScore">0</strong> points. There's always another wave.</p>
+                  <button type="button" id="playAgain" class="primary-button">PLAY AGAIN <span>↗</span></button>
+                </div>
+              </div>
+            </div>
+            <div class="wave-bar">
+              <button class="wave-button" id="waveLeft" type="button" aria-label="Send a wave left, shortcut left arrow"><span aria-hidden="true">↖</span> WAVE LEFT <kbd>←</kbd></button>
+              <div class="tide-center"><span>TIDE ENERGY</span><div class="energy-track" role="progressbar" aria-label="Tide energy" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" id="energyTrack"><div id="energyFill"></div></div></div>
+              <button class="wave-button" id="waveRight" type="button" aria-label="Send a wave right, shortcut right arrow">WAVE RIGHT <span aria-hidden="true">↗</span> <kbd>→</kbd></button>
+            </div>
+            <p class="board-footnote"><span>✳</span> CLICK TO DROP <span class="footnote-separator">·</span> ARROW KEYS TO MAKE WAVES <span class="footnote-separator">·</span> SPACE TO DROP</p>
+          </div>
+
+          <aside class="side-panel right-panel">
+            <div class="score-heading"><span class="panel-kicker">YOUR RUN <span>↗</span></span><span class="run-label">LIVE SCORE</span></div>
+            <div class="score-block"><span>SCORE</span><strong id="score">0000</strong></div>
+            <div class="score-stats"><div><span>PERSONAL BEST</span><strong id="best">0000</strong></div><div><span>MERGES</span><strong id="merges">00</strong></div></div>
+            <div class="next-section"><div class="section-heading"><span>UP NEXT</span><span class="small-sparkle">✦</span></div><div class="next-card"><canvas id="nextPiece" width="94" height="94" aria-label="Next piece preview"></canvas><div><small>READY TO ROLL</small><strong id="nextName">SUNNY</strong><span>Make it count ↗</span></div></div></div>
+            <div class="evolution-section"><div class="section-heading"><span>THE GANG</span><span>01 → 10</span></div><p>Keep matching to meet them all.</p><div class="tier-dots" id="tierDots" aria-label="Ten merge levels"></div></div>
+            <button type="button" class="restart-button" id="restart">↻ <span>START A NEW GAME</span> <span>↗</span></button>
+          </aside>
+        </section>
+      </main>
+      <footer><span>MADE TO PLAY, MADE TO STAY. <span class="footer-star">✳</span></span><span>© DLICOM PLAYGROUND <span class="footnote-separator">/</span> <a href="https://x.com/DlicomApp" target="_blank" rel="noopener noreferrer">FOLLOW @DLICOMAPP ↗</a></span></footer>
+    </div>
+    <div id="announcement" class="sr-only" aria-live="polite"></div>
+  </body>
+</html>
