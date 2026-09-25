@@ -9,6 +9,7 @@
     <link rel="icon" type="image/png" href="assets/dlicom-mark.png" />
     <link rel="stylesheet" href="styles.css" />
     <script src="game.js" defer></script>
+    <script src="leaderboard.js" defer></script>
   </head>
   <body>
     <div class="page-glow" aria-hidden="true"></div>
@@ -75,6 +76,11 @@
             <div class="next-section"><div class="section-heading"><span>UP NEXT</span><span class="small-sparkle">✦</span></div><div class="next-card"><canvas id="nextPiece" width="94" height="94" aria-label="Next piece preview"></canvas><div><small>READY TO ROLL</small><strong id="nextName">SUNNY</strong><span>Make it count ↗</span></div></div></div>
             <div class="evolution-section"><div class="section-heading"><span>THE GANG</span><span>01 → 10</span></div><p>Keep matching to meet them all.</p><div class="tier-dots" id="tierDots" aria-label="Ten merge levels"></div></div>
             <button type="button" class="restart-button" id="restart">↻ <span>START A NEW GAME</span> <span>↗</span></button>
+            <div class="leaderboard" id="leaderboard">
+              <div class="section-heading"><span>GLOBAL LEADERBOARD</span><span class="small-sparkle">✦</span></div>
+              <ol class="leaderboard-list" id="leaderboardList"></ol>
+              <p class="leaderboard-note" id="leaderboardNote">Loading global scores…</p>
+            </div>
           </aside>
         </section>
       </main>

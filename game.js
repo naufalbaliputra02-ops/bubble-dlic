@@ -320,6 +320,7 @@
       ended = true; gameOver.hidden = false;
       document.getElementById('finalScore').textContent = score;
       announce(`Game over. You scored ${score} points.`);
+      if (window.__driftLeaderboard && score > 0) window.__driftLeaderboard.submit(score);
     }
   }
 
