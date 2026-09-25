@@ -446,5 +446,6 @@
     dot.style.background = color; dot.style.setProperty('--dot-glow', color + '55'); dot.title = names[i]; dots.appendChild(dot);
   });
   if (location.hash === '#debug') window.driftDrop = { get pieces() { return pieces; }, get surfaceH() { return surfaceH; }, get current() { return current; } };
+  window.__driftScore = () => score;
   reset(); requestAnimationFrame(frame);
 })();

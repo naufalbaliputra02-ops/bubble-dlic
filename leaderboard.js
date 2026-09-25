@@ -87,6 +87,7 @@ async function handleGameOver(score) {
   try {
     const res = await submitScore(name, score);
     window.__lastSubmitted = score;
+    markSubmitted();
     if (res.rank != null && res.rank <= 10) {
       const note = document.getElementById('leaderboardNote');
       if (note) note.textContent = `You ranked #${res.rank} globally! 🎉`;
@@ -95,8 +96,59 @@ async function handleGameOver(score) {
   refreshLeaderboard();
 }
 
+function markSubmitted() {
+  const btn = document.getElementById('submitScore');
+  if (!btn) return;
+  btn.disabled = true;
+  btn.classList.add('lb-submitted');
+  const live = window.__driftScore ? window.__driftScore() : null;
+  btn.innerHTML = `SUBMITTED${live != null ? ' · ' + formatScore(live) : ''} <span aria-hidden="true">✓</span>`;
+}
+
+function updateSubmitLabel() {
+  const btn = document.getElementById('submitScore');
+  if (!btn || btn.disabled || btn.classList.contains('lb-submitted')) return;
+  const live = window.__driftScore ? window.__driftScore() : null;
+  if (live == null) return;
+  btn.innerHTML = `SUBMIT ${formatScore(live)} <span aria-hidden="true">↗</span>`;
+}
+
+function wireSubmitButton() {
+  const btn = document.getElementById('submitScore');
+  if (!btn) return;
+  btn.addEventListener('click', async () => {
+    const live = window.__driftScore ? window.__driftScore() : null;
+    if (live == null || live <= 0) {
+      const note = document.getElementById('leaderboardNote');
+      if (note) note.textContent = 'Score some points first, then submit.';
+      return;
+    }
+    const name = promptName();
+    if (!name) return;
+    btn.disabled = true;
+    btn.textContent = 'SUBMITTING…';
+    try {
+      await submitScore(name, live);
+      window.__lastSubmitted = live;
+      markSubmitted();
+      const note = document.getElementById('leaderboardNote');
+      if (note) note.textContent = `Submitted ${formatScore(live)} as ${name} ✓`;
+    } catch {
+      btn.disabled = false;
+      btn.textContent = 'RETRY SUBMIT ↗';
+      const note = document.getElementById('leaderboardNote');
+      if (note) note.textContent = 'Submit failed — try again.';
+      return;
+    }
+    refreshLeaderboard();
+  });
+  // keep the button label in sync with the live score while playing
+  setInterval(updateSubmitLabel, 1000);
+}
+
 // init
 refreshLeaderboard();
+wireSubmitButton();
 // poll every 45s so the board feels live while playing
 setInterval(refreshLeaderboard, 45000);
 window.__driftLeaderboard = { refresh: refreshLeaderboard, submit: handleGameOver };
